@@ -7,9 +7,11 @@ class BookCommentsController < ApplicationController
     redirect_to request.referer
   end
 
+  # 同じ画面に戻る（redirect_to request.referer）
+
   def destroy
     BookComment.find(params[:id]).destroy
-    redirect_to book_path(params[:book_id])
+    redirect_to request.referer
   end
 
   private

@@ -20,9 +20,10 @@
             <%= @book.user.name %>
             <% end %>
           </td>
-      </table>
 
-      <table>
+      <!--</table>-->
+
+      <!--<table>-->
 
           <td><%= link_to @book.title, @book %></td>
 
@@ -37,21 +38,26 @@
               <td><%= link_to 'Destroy', @book, method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger destroy_book_#{@book.id}"%></td>
             <% end %>
         </tr>
+      </table>
 
-        <!--コメント記入欄-->
-        <tr>
-          <% @book.book_comments.each do |book_comment| %>
+
+        <!--コメント記入欄,コメント投稿-->
+      <table>
+        <% @book.book_comments.each do |book_comment| %>
+         <tr>
             <td><%= image_tag book_comment.user.get_profile_image, size:"100x100" %><br>
                 <%= link_to book_comment.user.name, book_comment.user %>
             </td>
+
             <td><%= book_comment.comment %></td>
 
             <% if book_comment.user == current_user %>
               <td><%= link_to 'Destroy', book_book_comment_path(book_comment.book, book_comment), method: :delete, class: "btn btn-sm btn-danger destroy_book_#{@book.id}" %></td>
             <% end %>
-          <% end %>
-        </tr>
+          </tr>
+        <% end %>
       </table>
+
       <%= form_with model: [@book, @book_comment] do |f| %>
         <%= f.text_area :comment, class: "form-control", rows: '5', placeholder: "コメント欄" %>
         <%= f.submit "送信" %>
