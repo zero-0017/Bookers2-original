@@ -59,7 +59,7 @@
       </table>
 
       <%= form_with model: [@book, @book_comment] do |f| %>
-        <%= f.text_area :comment, class: "form-control", rows: '5', placeholder: "コメント欄" %>
+        <%= f.text_area :comment, class: "form-control mb-2", rows: '6', placeholder: "" %>
         <%= f.submit "送信" %>
       <% end %>
     </div>
