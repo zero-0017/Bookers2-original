@@ -11,7 +11,7 @@ end
 
   resources :users, only: [:index,:show,:edit,:update] do
       resource :relationships, only: [:create, :destroy]
-    get :followings, on: :member
-    get :followers, on: :member
+    get :following, on: :member
+    get :follower, on: :member
 end
 end

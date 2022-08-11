@@ -6,13 +6,14 @@
       <th colspan="6"></th>
     </tr>
   </thead>
+
   <tbody>
     <% users.each do |user| %>
       <tr>
         <td><%= image_tag user.get_profile_image, size: '50x50' %></td>
         <td><%= user.name %></td>
-        <td>フォロー数：<%= user.followers.count %></td>
-        <td>フォロワー数：<%= user.followings.count %></td>
+        <td>フォロー数：<%= user.follower.count %></td>
+        <td>フォロワー数：<%= user.following.count %></td>
         <% if user != current_user %>
         <td>
           <% if user.is_followed_by?(current_user) %>
