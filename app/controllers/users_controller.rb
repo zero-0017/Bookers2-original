@@ -11,10 +11,9 @@ class UsersController < ApplicationController
     @users = User.all
     @book = Book.new
     @users = User.where.not(id: current_user.id)
- end
+  end
 
   def edit
-    # @users = user.followers
   end
 
   def followings

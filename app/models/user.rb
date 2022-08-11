@@ -8,7 +8,7 @@ class User < ApplicationRecord
   has_many :favorites, dependent: :destroy
   has_many :book_comments, dependent: :destroy
 
-  #フォローするユーザー
+  #フォローしているユーザー
   has_many :relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
   has_many :followings, through: :relationships, source: :followed
 
@@ -26,7 +26,7 @@ class User < ApplicationRecord
     (profile_image.attached?) ? profile_image : 'no_image.jpg'
   end
 
-    def is_followed_by?(user)
+  def is_followed_by?(user)
     reverse_of_relationships.find_by(follower_id: user.id).present?
   end
 end
