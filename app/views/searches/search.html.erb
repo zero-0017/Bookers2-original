@@ -1,0 +1,43 @@
+<table class='table' >
+<% if @range == "User" %>
+  <h2>Users search for "<%= params[:word] %>"</h2>
+    <thead>
+      <tr>
+        <th></th>
+        <th>name</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <!--検索対象モデルがUserの時 -->
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= image_tag user.get_profile_image, size: '50x50' %></td>
+          <td><%= user.name %></td>
+          <td><%= link_to 'Show', user, class: "user_#{user.id}" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+<% else %>
+  <h2>Books search for "<%= params[:word] %>"</h2>
+    <thead>
+      <tr>
+        <th></th>
+        <th>Title</th>
+        <th>Opinion</th>
+      </tr>
+    </thead>
+
+    <!--検索対象モデルがUserではない時(= 検索対象モデルがBookの時) -->
+    <tbody>
+      <% @books.each do |book| %>
+        <tr>
+          <td><%= image_tag book.user.get_profile_image, size: '50x50' %></td>
+          <td><%= link_to book.title, book, class: "book_#{book.id}" %></td>
+          <td><%= book.body %></td>
+        </tr>
+      <% end %>
+    </tbody>
+<% end %>
+</table>
