@@ -1,5 +1,4 @@
 <% if user_signed_in? %>
-<div class="search_form">
  <% unless current_page?(root_path) %>
   <%= form_with url: search_path, local: true, method: :get do |f| %>
   <%= f.text_field :word, required: true %><!--required: true 空では検索出来ない-->
@@ -8,5 +7,4 @@
   <%= f.submit "検索" %>
  <% end %>
  <% end %>
- </div>
 <% end %>
