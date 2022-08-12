@@ -1,12 +1,12 @@
   <% if book.favorited_by?(current_user) %>
-    <p>
-      <%= link_to book_favorites_path(book),class: "text-danger", method: :delete do %>
+    <p><!--remote; true =HTMLリクエスト（ページを読み込む）ではなく、JavaScriptのリクエスト（ページ読み込みなし）がfavoritesコントローラに送られます。-->
+      <%= link_to book_favorites_path(book), class: "text-danger", method: :delete, remote: true do %>
         <i class="fas fa-heart unlike-btn"></i><%= book.favorites.count %>
       <% end %>
     </p>
     <% else %>
     <p>
-      <%= link_to book_favorites_path(book), method: :post do %>
+      <%= link_to book_favorites_path(book), method: :post, remote: true do %>
         <i class="fas fa-heart unlike-btn"></i><%= book.favorites.count %>
       <% end %>
     </p>
