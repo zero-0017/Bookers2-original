@@ -1,0 +1,4 @@
+<%= form_with model: [book, book_comment], local: false do |f| %><!--localオプションは、「同期処理にするかどうか」という設定を行うオプション-->
+  <%= f.text_area :comment, class: "form-control mb-2", rows: '6', placeholder: "" %>
+　<%= f.submit "送信" %>
+<% end %>
