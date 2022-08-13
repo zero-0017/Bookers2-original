@@ -40,7 +40,7 @@ before_action :ensure_correct_book, only: [:edit, :update]
   def destroy
     @book = Book.find(params[:id])
     @book.destroy
-    # redirect_to books_path
+    redirect_to books_path
   end
 
   private
@@ -52,7 +52,7 @@ before_action :ensure_correct_book, only: [:edit, :update]
   def ensure_correct_book
     @book = Book.find(params[:id])
     unless @book.user == current_user
-      # redirect_to books_path
+      redirect_to books_path
     end
   end
 end
