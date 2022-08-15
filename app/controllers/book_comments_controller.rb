@@ -14,7 +14,7 @@ class BookCommentsController < ApplicationController
   def destroy
     @book = Book.find(params[:book_id])
     BookComment.find(params[:id]).destroy
-    # render :destroy
+    # @comment.destroy
   end
 
   private
