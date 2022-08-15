@@ -1,4 +1,4 @@
-$('.comment_area').html("<%= j(render 'book_comments/comment_index', book: @book) %>");
+$('.comment_area').html("<%= j(render 'book_comments/comment_list', book: @book) %>");
 $('.comment_count').html("コメント数：<%= @book.book_comments.count %>");
 
 

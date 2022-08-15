@@ -41,8 +41,7 @@
 
         <!--コメント記入欄,コメント投稿-->
       <table class="comment_area">
-        <%= render 'book_comments/comment_index', book: @book %>
-        </div>
+        <%= render 'book_comments/comment_list', book: @book %>
       </table>
       <div class="new_comment">
         <%= render 'book_comments/comment_form', book: @book, book_comment: @book_comment %>
