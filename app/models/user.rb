@@ -4,9 +4,14 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_many :books
+  has_many :books, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :book_comments, dependent: :destroy
+
+  #チャット/DM機能
+  has_many :user_rooms, dependent: :destroy
+  has_many :chats, dependent: :destroy
+  # has_many :rooms, through: :user_rooms
 
   #フォローしているユーザー
   has_many :relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy

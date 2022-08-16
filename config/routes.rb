@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'chats/show'
   devise_for :users
 
   root to: "homes#top"
@@ -15,4 +16,7 @@ end
     get :following, on: :member
     get :follower, on: :member
 end
+  get 'chats/:id', to: 'chats#show', as: 'chat'
+  resources :chats, only: [:create]
+
 end
