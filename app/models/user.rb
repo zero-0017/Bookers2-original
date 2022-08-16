@@ -11,7 +11,7 @@ class User < ApplicationRecord
   #チャット/DM機能
   has_many :user_rooms, dependent: :destroy
   has_many :chats, dependent: :destroy
-  # has_many :rooms, through: :user_rooms
+  has_many :rooms, through: :user_rooms
 
   #フォローしているユーザー
   has_many :relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy

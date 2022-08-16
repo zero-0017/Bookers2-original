@@ -23,9 +23,7 @@
   </tr>
 </table>
 
-<% if current_user != @user %>
-  <%= link_to 'chatを始める', chat_path(@user.id)%>
-<% end %>
+
 <div class='row'>
   <% if user == current_user %>
     <%= link_to edit_user_path(user), class: "btn btn-outline-secondary btn-block edit_user_#{user.id}" do %>
@@ -41,5 +39,9 @@
       フォローする
       <% end %>
     <% end %>
+    <!--DM機能実装-->
+<% if current_user != @user %>
+  <%= link_to 'chatを始める', chat_path(@user.id), class: "ml-3" %>
+<% end %>
   <% end %>
 </div>

@@ -9,15 +9,15 @@ before_action :ensure_correct_book, only: [:edit, :update]
   end
 
   def index
-    to = Time.current.at_end_of_day
-    from = (to - 6.day).at_beginning_of_day
-    @books = Book.includes(:favorited_users).
-    sort_by {|x|
-    x.favorited_users.includes(:favorites).where(created_at: from...to).size
-    }.reverse
+    to  = Time.current.at_end_of_day#Time.current はconfig/application.rbに設定してあるタイムゾーンを元に現在日時を取得している　#at_end_of_day は1日の終わりを23:59に設定している
+    from  = (to - 6.day).at_beginning_of_day#at_beginning_of_day　は1日の始まりの時刻を0:00に設定している
+    @books = Book.includes(:favorited_users).#ユーザーの情報がfavorited_usersに格納されていて、includesの引数に入れてあげることで、事前にユーザーのデータを読み込ませてあげることができる
+      sort {|a,b|#sort {|b,a|なら、いいねの少ない順に投稿を表示
+        b.favorited_users.includes(:favorites).where(created_at: from...to).size <=>
+        a.favorited_users.includes(:favorites).where(created_at: from...to).size
+      }
     @book = Book.new
-    # @books = Book.all
-    # @book = Book.new
+    # @user = current_user
   end
 
   def create
@@ -48,17 +48,6 @@ before_action :ensure_correct_book, only: [:edit, :update]
     @book = Book.find(params[:id])
     @book.destroy
     redirect_to books_path
-  end
-
-  def index
-    to  = Time.current.at_end_of_day#Time.current はconfig/application.rbに設定してあるタイムゾーンを元に現在日時を取得している　#at_end_of_day は1日の終わりを23:59に設定している
-    from  = (to - 6.day).at_beginning_of_day#at_beginning_of_day　は1日の始まりの時刻を0:00に設定している
-    @books = Book.includes(:favorited_users).#ユーザーの情報がfavorited_usersに格納されていて、includesの引数に入れてあげることで、事前にユーザーのデータを読み込ませてあげることができる
-      sort {|a,b|#sort {|b,a|なら、いいねの少ない順に投稿を表示
-        b.favorited_users.includes(:favorites).where(created_at: from...to).size <=>
-        a.favorited_users.includes(:favorites).where(created_at: from...to).size
-      }
-    @book = Book.new
   end
 
   private
