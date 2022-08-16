@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_many :books, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :book_comments, dependent: :destroy
+  has_many :view_counts, dependent: :destroy#閲覧数カウント
 
   #チャット/DM機能
   has_many :user_rooms, dependent: :destroy

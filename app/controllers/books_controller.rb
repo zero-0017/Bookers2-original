@@ -2,6 +2,10 @@ class BooksController < ApplicationController
 before_action :ensure_correct_book, only: [:edit, :update]
 
   def show
+    @book_detail = Book.find(params[:id])
+    unless ViewCount.find_by(user_id: current_user.id, book_id: @book_detail.id)
+      current_user.view_counts.create(book_id: @book_detail.id)
+    end
     @book_new = Book.new
     @book = Book.find(params[:id])
     @user = @book.user
