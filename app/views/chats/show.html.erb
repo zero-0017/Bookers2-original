@@ -3,6 +3,7 @@
 <!--% if current_user != @user %>-->
 <!--  %= link_to 'Begin Chat', chat_path(@user.id) %>-->
 <!--% end %>-->
+
 <h2><%= @user.name %>さんとのチャット</h2>
 
 <div class="message" style="width: 400px;">
@@ -15,11 +16,7 @@
   <% end %>
 </div>
 
-<!--<div class="errors">-->
-<!--  %= render "layouts/errors", obj: @chat %>-->
-<!--</div>-->
-
 <%= form_with model: @chat, data: {remote: true} do |f| %>
-  <%= f.text_field :message %>
+  <%= f.text_field :message, required: true, :placeholder => "メッセージを入力して下さい",class: "w-50" %><!--required: true 空では送信出来ない-->
   <%= f.hidden_field :room_id %>
 <% end %>

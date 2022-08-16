@@ -1,5 +1,7 @@
 class ChatsController < ApplicationController
  # before_action :reject_non_related, only: [:show]
+ # before_action :authenticate_user!
+
  def show
   #BさんのUser情報を取得
    @user = User.find(params[:id])
@@ -10,32 +12,33 @@ class ChatsController < ApplicationController
    user_room = UserRoom.find_by(user_id: @user.id, room_id: rooms)
 
   #user_roomでルームを取得できなかった（AさんとBさんのチャットがまだ存在しない）場合の処理
-   room = nil
+   # room = nil
    if user_room.nil?
    #roomのidを採番
-    room = Room.new
-    room.save
+    @room = Room.new
+    @room.save
     #採番したroomのidを使って、user_roomのレコードを2人分（Aさん用、Ｂさん用）作る（＝AさんとBさんに共通のroom_idを作る）
     #Bさんの@user.idをuser_idとして、room.idをroom_idとして、UserRoomモデルのがラムに保存（1レコード）
-     UserRoom.create(user_id: @user.id, room_id: room.id)
+     UserRoom.create(user_id: @user.id, room_id: @room.id)
     #Aさんのcurrent_user.idをuser_idとして、room.idをroom_idとして、UserRoomモデルのカラムに保存（1レコード）
-     UserRoom.create(user_id: current_user.id, room_id: room.id)
+     UserRoom.create(user_id: current_user.id, room_id: @room.id)
    else
     #user_roomに紐づくroomsテーブルのレコードをroomに格納
-     room = user_room.room
+     @room = user_room.room
    end
 
    #roomに紐づくchatsテーブルのレコードを@chatsに格納
-    @chats = room.chats
+    @chats = @room.chats
    #form_withでチャットを送信する際に必要な空のインスタンス
    #ここでroom.idを@chatに代入しておかないと、form_withで記述するroom_idに値が渡らない
-    @chat = Chat.new(room_id: room.id)
+    @chat = Chat.new(room_id: @room.id)
  end
 
   def create
     @chat = current_user.chats.new(chat_params)
+    # render :validater unless @chat.save
     @chat.save
-    redirect_to chat_path(current_user.id)
+    # redirect_to chat_path(current_user.id)
   end
 
   private

@@ -15,7 +15,7 @@ end
     get :following, on: :member
     get :follower, on: :member
 end
-  get 'chats/:id', to: 'chats#show', as: 'chat'
+  # get 'chats/:id', to: 'chats#show', as: 'chat'
   resources :chats, only: [:show, :create]
 
 end
