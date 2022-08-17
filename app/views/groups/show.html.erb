@@ -47,9 +47,9 @@
                 <td><%= link_to 'Notice an Event', new_group_event_notice_path(@group), class: "btn btn-sm btn-info" %></td>
 
             <% elsif @group.users.include?(current_user) %>
-                <td><%= link_to 'Leave this group', group_path(@group), method: :delete, class: "btn btn-sm btn-danger" %></td>
+                <%= link_to 'Leave this group', group_path(@group), method: :delete, class: "btn btn-sm btn-danger" %>
             <% else %>
-                <td><%= link_to 'Join this group', group_join_path(@group), class: "btn btn-sm btn-success" %></td>
+                <%= link_to 'Join this group', group_join_path(@group), class: "btn btn-sm btn-success" %>
             <% end %>
           </td>
         </tr>
