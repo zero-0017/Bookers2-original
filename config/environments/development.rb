@@ -76,4 +76,15 @@ Rails.application.configure do
   # # config.action_cable.disable_request_forgery_protection = true
   # config.hosts << "44d8b06033fb46068ccb43334e414fa2.vfs.cloud9.ap-northeast-1.amazonaws.com"
   config.hosts.clear
+
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      address:              'smtp.gmail.com',
+      port:                 587,
+      domain:               'gmail.com',
+      user_name:            ENV['MAIL_ADDRESS'],
+      password:             ENV['MAIL_PASSWORD'],
+      authentication:       'plain',
+      enable_starttls_auto: true
+    }
 end

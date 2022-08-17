@@ -19,6 +19,8 @@ end
   resources :chats, only: [:show, :create]
   resources :groups do
     get 'join' => 'groups#join'
+    resources :event_notices, only: [:new, :create]
+    get "event_notices" => "event_notices#sent"
   end
 
 end
