@@ -17,5 +17,6 @@ end
     get "search", to: "users#search"
 end
   resources :chats, only: [:show, :create]
+  resources :groups, except: [:destroy]
 
 end
