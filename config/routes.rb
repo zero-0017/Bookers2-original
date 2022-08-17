@@ -11,11 +11,11 @@ Rails.application.routes.draw do
 end
 
   resources :users, only: [:index,:show,:edit,:update] do
-      resource :relationships, only: [:create, :destroy]
+    resource :relationships, only: [:create, :destroy]
     get :following, on: :member
     get :follower, on: :member
+    get "search", to: "users#search"
 end
-  # get 'chats/:id', to: 'chats#show', as: 'chat'
   resources :chats, only: [:show, :create]
 
 end

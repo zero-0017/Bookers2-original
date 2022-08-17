@@ -87,6 +87,18 @@
     </tbody>
   </table>
 
+<!--指定した日の投稿数を表示-->
+  <%= form_with url: user_search_path(@user), method: :get, local: false do |f| %>
+  <%= f.date_field :created_at %><!--年/月/日が表示-->
+  <%= f.submit '検索', class: 'btn btn-primary'  %>
+  <% end %>
+
+<div id="search_result"><!--jsファイルを呼び出します-->
+  <% if @search_book.present? %>
+    <%= render 'search', search_book: @search_book %><!--検索結果を部分テンプレート化-->
+  <% end %>
+</div>
+
   <!--グラフ-->
   <canvas id="myLineChart"></canvas>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
