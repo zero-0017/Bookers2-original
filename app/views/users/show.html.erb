@@ -11,7 +11,7 @@
       <%= render 'books/index',books: @books %>
 
       <!--今日と前日の投稿数と比較差-->
-      <h2>投稿数の前日比・前週比</h2>
+      <h4>投稿数の前日比・前週比</h4>
       　<table class="table table-bordered">
           <thead>
             <tr>
@@ -59,6 +59,86 @@
           </tr>
         </tbody>
       </table>
-    </div>
+
+     <!--過去７日間分、投稿数を一覧表示-->
+  <h4>7日間分の投稿数</h4>
+  <table class='table table-bordered'>
+    <thead>
+      <tr>
+        <th>６日前</th>
+        <th>５日前</th>
+        <th>４日前</th>
+        <th>３日前</th>
+        <th>２日前</th>
+        <th>１日前</th>
+        <th>今日</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><%= @books.created_six_days_ago.count %></td>
+        <td><%= @books.created_five_days_ago.count %></td>
+        <td><%= @books.created_four_days_ago.count %></td>
+        <td><%= @books.created_three_days_ago.count %></td>
+        <td><%= @books.created_two_days_ago.count %></td>
+        <td><%= @books.created_yesterday.count %></td>
+        <td><%= @books.created_today.count %></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!--グラフ-->
+  <canvas id="myLineChart"></canvas>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+
+  <script>
+  var ctx = document.getElementById("myLineChart");
+  var myLineChart = new Chart(ctx, {
+    // グラフタイプを設定する項目
+    type: 'line',//グラフの種類
+
+    // データをセットする項目
+    data: {
+      labels: ['6日前', '５日前', '４日前', '３日前', '２日前', '１日前', '今日'],//データの軸ラベル
+      datasets: [//データセット
+        {
+          label: '投稿した本の数',//データの凡例
+          data://データの値
+          [<%=@six_days_ago_book.count %>,
+          <%=@five_days_ago_book.count %> ,
+          <%=@four_days_ago_book.count %>,
+          <%=@three_days_ago_book.count %>,
+          <%=@two_days_ago_book.count %>,
+          <%=@yesterday_book.count %>,
+          <%=@today_book.count %>
+          ],
+          borderColor: "rgba(0,0,255,1",//線の色
+          backgroundColor: "rgba(0,0,0,0)"//線の下の塗りつぶしの色
+        },
+      ],
+    },
+
+    // グラフのオプションをつける設定
+    options: {
+      title: {
+        display: true,//タイトル表示の可否
+        text: '7日間の投稿数の比較'//タイトル名
+      },
+      scales: {
+        yAxes: [{
+          ticks: {
+            suggestedMax: 10,//軸の最大値
+              suggestedMin: 0,//軸の最小値
+            stepSize: 1,//軸の刻み幅
+            callback: function(value, index, values){
+              return  value//軸のラベル
+            }
+          }
+        }]
+      },
+    }
+  });
+  </script>
   </div>
+ </div>
 </div>
