@@ -7,6 +7,7 @@ class Book < ApplicationRecord
 
   validates :title,presence:true
   validates :body,presence:true,length:{maximum:200}
+  validates :star,presence:true
 
 #scope :スコープの名前, -> { 条件式 }
   scope :created_today, -> { where(created_at: Time.zone.now.all_day) }# Time.zone.now.all_day　1日を表す。

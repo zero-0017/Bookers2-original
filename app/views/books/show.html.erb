@@ -30,6 +30,24 @@
             <%= render 'favorites/favorite', book: @book %>
 
 　　　　　　<td class="comment_count">コメント数：<%= @book.book_comments.count %></td>
+
+　　　　　　<!--星レビュー機能-->
+          <td>
+            <div id="rate_star<%= @book.id %>"></div>
+              <script>
+                $('#rate_star<%= @book.id %>').empty();
+                $('#rate_star<%= @book.id %>').raty({
+                  size: 36,
+                  starOff:  '<%= asset_path('star-off.png') %>',
+                  starOn : '<%= asset_path('star-on.png') %>',
+                  starHalf: '<%= asset_path('star-half.png') %>',
+                  half: true,
+                  readOnly: true,
+                  score: <%= @book.star %>
+                });
+              </script>
+          </td>
+
 　　　　　　<td> 閲覧数: <%= @book.view_counts.count %></td>
 
             <% if @book.user == current_user %>
