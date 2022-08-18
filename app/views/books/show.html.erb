@@ -25,6 +25,11 @@
 
           <td><%= @book.body %></td>
 
+          <td><%= link_to search_book_path(keyword: @book.category) do %>
+              <%= @book.category %>
+            <% end %>
+          </td>
+
 　　　　　<!--部分テンプレートにした箇所(部分的に更新したい箇所)-->
           <td class="favorite_buttons_<%= @book.id %>">
             <%= render 'favorites/favorite', book: @book %>
@@ -43,7 +48,7 @@
                   starHalf: '<%= asset_path('star-half.png') %>',
                   half: true,
                   readOnly: true,
-                  score: <%= @book.star %>
+                  score: '<%= @book.star %>'
                 });
               </script>
           </td>

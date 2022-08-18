@@ -9,6 +9,10 @@
     <%= f.text_area :body, class: 'form-control book_body' %>
   </div>
 
+  <div class="form-group">
+    <%= f.label :tag %>
+    <%= f.text_field :category, class: 'form-control book_category' %>
+  </div>
 
   <!--星5レビュー機能-->
   <!--% unless current_page?(edit_book_path(@book)) %>-->
