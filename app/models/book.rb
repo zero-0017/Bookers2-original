@@ -7,7 +7,12 @@ class Book < ApplicationRecord
 
   validates :title,presence:true
   validates :body,presence:true,length:{maximum:200}
-  validates :star,presence:true
+  validates :star,presence:true#星レビュー
+
+#新しい順、古い順、評価の高い順
+  scope :latest, -> {order(created_at: :desc)}#　投稿新しい
+  scope :old, -> {order(created_at: :asc)}#　投稿古い
+  scope :star_count, -> {order(star: :desc)}#　評価高い
 
 #scope :スコープの名前, -> { 条件式 }
   scope :created_today, -> { where(created_at: Time.zone.now.all_day) }# Time.zone.now.all_day　1日を表す。

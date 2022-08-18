@@ -20,6 +20,15 @@ before_action :ensure_correct_book, only: [:edit, :update]
         b.favorited_users.includes(:favorites).where(created_at: from...to).size <=>
         a.favorited_users.includes(:favorites).where(created_at: from...to).size
       }
+  if params[:latest]
+     @books = Book.latest
+  elsif params[:old]
+     @books = Book.old
+  elsif params[:star_count]
+     @books = Book.star_count
+  else
+     @books = Book.all
+  end
     @book = Book.new
     # @user = current_user
   end
