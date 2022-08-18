@@ -104,6 +104,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
 
   <script>
+  document.addEventListener("turbolinks:load", function() {
   var ctx = document.getElementById("myLineChart");
   var myLineChart = new Chart(ctx, {
     // グラフタイプを設定する項目
@@ -130,6 +131,8 @@
       ],
     },
 
+
+
     // グラフのオプションをつける設定
     options: {
       title: {
@@ -150,6 +153,7 @@
       },
     }
   });
+  })
   </script>
   </div>
  </div>
