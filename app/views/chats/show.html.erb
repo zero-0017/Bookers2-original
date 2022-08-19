@@ -1,16 +1,41 @@
-<h1 id="room" data-room="<%= @room.id %>" data-user="<%= current_user.id %>"><%= @user.name %> さんとのチャット</h1>
+<div class="container">
+  <div class="">
+    <div class="col-xs-6">
+         <h1 id="room" data-room="<%= @room.id %>" data-user="<%= current_user.id %>"><%= @user.name %> さんとのチャット</h1>
 
-<div class="message" style="width: 400px;">
-  <% @chats.each do |chat| %>
-    <% if chat.user_id == current_user.id %>
-      <p style="text-align: right;"><%= chat.message %></p>
-    <% else %>
-      <p style="text-align: left;"><%= chat.message %></p>
-    <% end %>
-  <% end %>
+            <table class="message table">
+              <thead>
+                <tr>
+                  <th style="text-align: left; font-size: 20px;"><%= @user.name %></th>
+                  <th style="text-align: right; font-size: 20px;"><%= current_user.name %></th>
+                </tr>
+              </thead>
+              <% @chats.each do |chat| %>
+                <tr>
+                  <th></th>
+                  <th>
+                    <p style="text-align: right;"><%= chat.message %></p>
+                  </th>
+                </tr>
+              <% if chat.user_id == current_user.id %>
+              <tbody>
+              <% else %>
+                <tr>
+                  <th>
+                    <p style="text-align: left;"><%= chat.message %></p>
+                  </th>
+                  <th></th>
+                </tr>
+              </tbody>
+
+                <% end %>
+              <% end %>
+            </table>
+
+          <%= form_with model: @chat, data: {remote: true} do |f| %>
+          <%= f.text_field :message, required: true, :placeholder => "メッセージを入力して下さい",class: "w-50" %><!--required: true 空では送信出来ない-->
+          <%= f.hidden_field :room_id %>
+          <% end %>
+    </div>
+  </div>
 </div>
-
-<%= form_with model: @chat, data: {remote: true} do |f| %>
-  <%= f.text_field :message, required: true, :placeholder => "メッセージを入力して下さい",class: "w-50" %><!--required: true 空では送信出来ない-->
-  <%= f.hidden_field :room_id %>
-<% end %>
