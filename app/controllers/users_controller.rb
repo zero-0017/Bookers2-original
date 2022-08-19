@@ -31,7 +31,8 @@ class UsersController < ApplicationController
   def index
     @users = User.all
     @book = Book.new
-    @users = User.where.not(id: current_user.id)
+    # @users = User.where.not(id: current_user.id)#ログインしているアカウントがユーザー一覧で非表示になる
+    @user = current_user
   end
 
   def edit
