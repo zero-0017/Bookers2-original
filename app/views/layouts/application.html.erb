@@ -12,17 +12,6 @@
 
   <body>
     <%= render 'layouts/header' %>
-
-<% unless current_page?(root_path) %>
-    <% if user_signed_in? %>
-    <div class="search-form text-center mt-3">
-    <%= form_with url: search_book_path, method: :get do |f| %>
-      <%= f.text_field :keyword, value: @keyword %>
-      <%= f.submit "タグ検索" %>
-    <% end %>
-    </div>
-  <% end %>
-  <% end %>
       <main>
         <p id="notice"><%= notice %></p>
         <%= yield %>

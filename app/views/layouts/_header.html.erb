@@ -62,10 +62,18 @@
     </div>
   </nav>
 <div class="container">
-    <div class='row'>
-      <div class='mx-auto mt-1'>
-        <%= render 'searches/search' %>
-      </div>
+  <div class='row'>
+      <%= render 'searches/search' %>
+      <% unless current_page?(root_path) %>
+    <% if user_signed_in? %>
+    <div class="search-form text-center mx-4 mt-3">
+    <%= form_with url: search_book_path, method: :get do |f| %>
+      <%= f.text_field :keyword, required: true, value: @keyword %>
+      <%= f.submit "タグ検索" %>
+    <% end %>
     </div>
+  <% end %>
+  <% end %>
   </div>
+</div>
 </header>
