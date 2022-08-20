@@ -10,6 +10,8 @@
       <h2>Books</h2>
       <%= render 'books/index',books: @books %>
 
+      <%= paginate @books %>
+
       <!--今日と前日の投稿数と比較差-->
       <h4>投稿数の前日比・前週比</h4>
       　<table class="table table-bordered">

@@ -21,13 +21,13 @@ before_action :ensure_correct_book, only: [:edit, :update]
         a.favorited_users.includes(:favorites).where(created_at: from...to).size
       }
   if params[:latest]
-     @books = Book.latest
+     @books = Book.latest.page(params[:page])
   elsif params[:old]
-     @books = Book.old
+     @books = Book.old.page(params[:page])
   elsif params[:star_count]
-     @books = Book.star_count
+     @books = Book.star_count.page(params[:page])
   else
-     @books = Book.all
+     @books = Book.all.page(params[:page])
   end
     @book = Book.new
     # @user = current_user

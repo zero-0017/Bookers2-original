@@ -58,3 +58,4 @@ gem 'net-smtp'
 gem 'jquery-rails'
 gem 'haml-rails'
 gem "chartkick"
+gem 'kaminari','~> 1.2.1'

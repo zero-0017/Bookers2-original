@@ -3,7 +3,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @books = @user.books
+    @books = @user.books.page(params[:page])
     @book = Book.new
     @today_book = @books.created_today
     @yesterday_book = @books.created_yesterday
@@ -29,7 +29,7 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.all
+    @users = User.all.page(params[:page])
     @book = Book.new
     # @users = User.where.not(id: current_user.id)#ログインしているアカウントがユーザー一覧で非表示になる
     @user = current_user
@@ -40,12 +40,12 @@ class UsersController < ApplicationController
 
   def following
     user = User.find(params[:id])
-    @users = user.following
+    @users = user.following.page(params[:page])
   end
 
   def follower
     user = User.find(params[:id])
-    @users = user.follower
+    @users = user.follower.page(params[:page])
   end
 
   def update
