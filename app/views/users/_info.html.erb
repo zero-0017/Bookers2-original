@@ -23,6 +23,9 @@
   </tr>
 </table>
 
+<% if user.name != "guestuser" %>
+
+
 
 <div class='row'>
   <% if user == current_user %>
@@ -44,4 +47,6 @@
   <%= link_to 'chatを始める', chat_path(@user.id), class: "ml-3" %>
 <% end %>
   <% end %>
+
 </div>
+<% end %>
