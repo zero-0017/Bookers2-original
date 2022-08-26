@@ -14,5 +14,4 @@ class FavoritesController < ApplicationController
     favorite.destroy
     # redirect_to request.referer　　destroyアクション実行後はdestroy.js.erbファイルに。
   end
-
 end

@@ -22,10 +22,10 @@ class UsersController < ApplicationController
     @books = @user.books
     @book = Book.new
     if params[:created_at] == ""
-      @search_book = "日付を選択してください"# if文で分岐させて空欄なら日付を選択するように表示
+      @search_book = "日付を選択してください" # if文で分岐させて空欄なら日付を選択するように表示
     else
       create_at = params[:created_at]
-      @search_book = @books.where(['created_at LIKE ? ', "#{create_at}%"]).count#　countメソッドで検索してヒットした本を投稿した日付の投稿数を@search_bookで定義
+      @search_book = @books.where(["created_at LIKE ? ", "#{create_at}%"]).count # 　countメソッドで検索してヒットした本を投稿した日付の投稿数を@search_bookで定義
     end
   end
 
@@ -59,22 +59,21 @@ class UsersController < ApplicationController
   end
 
   private
-
-  def user_params
-    params.require(:user).permit(:name, :introduction, :profile_image)
-  end
-
-  def ensure_correct_user
-    @user = User.find(params[:id])
-    unless @user == current_user
-      redirect_to user_path(current_user)
+    def user_params
+      params.require(:user).permit(:name, :introduction, :profile_image)
     end
-  end
 
-  def ensure_guest_user
-    @user = User.find(params[:id])
-    if @user.name == "guestuser"
-      redirect_to user_path(current_user) , notice: 'ゲストユーザーはプロフィール編集画面へ遷移できません。'
+    def ensure_correct_user
+      @user = User.find(params[:id])
+      unless @user == current_user
+        redirect_to user_path(current_user)
+      end
     end
-  end
+
+    def ensure_guest_user
+      @user = User.find(params[:id])
+      if @user.name == "guestuser"
+        redirect_to user_path(current_user), notice: "ゲストユーザーはプロフィール編集画面へ遷移できません。"
+      end
+    end
 end

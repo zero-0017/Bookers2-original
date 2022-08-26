@@ -5,22 +5,22 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :books, dependent: :destroy
-  has_many :group_users, dependent: :destroy#グループ作成
-  has_many :groups, through: :group_users, dependent: :destroy#グループ作成
+  has_many :group_users, dependent: :destroy # グループ作成
+  has_many :groups, through: :group_users, dependent: :destroy # グループ作成
   has_many :favorites, dependent: :destroy
   has_many :book_comments, dependent: :destroy
-  has_many :view_counts, dependent: :destroy#閲覧数カウント
+  has_many :view_counts, dependent: :destroy # 閲覧数カウント
 
-  #チャット/DM機能
+  # チャット/DM機能
   has_many :user_rooms, dependent: :destroy
   has_many :chats, dependent: :destroy
   has_many :rooms, through: :user_rooms
 
-  #フォローしているユーザー
+  # フォローしているユーザー
   has_many :relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
   has_many :following, through: :relationships, source: :followed
 
-  #フォローされるユーザー
+  # フォローされるユーザー
   has_many :reverse_of_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
   has_many :follower, through: :reverse_of_relationships, source: :follower
 
@@ -28,7 +28,7 @@ class User < ApplicationRecord
   has_one_attached :profile_image
 
   def self.guest
-    find_or_create_by!(name: 'guestuser' ,email: 'guest@example.com' )do |user|
+    find_or_create_by!(name: "guestuser", email: "guest@example.com") do |user|
       user.password = SecureRandom.urlsafe_base64
       user.name = "guestuser"
     end
@@ -38,23 +38,23 @@ class User < ApplicationRecord
   validates :introduction, length: { maximum: 50 }
 
   def get_profile_image
-    (profile_image.attached?) ? profile_image : 'no_image.jpg'
+    (profile_image.attached?) ? profile_image : "no_image.jpg"
   end
 
   def is_followed_by?(user)
     reverse_of_relationships.find_by(follower_id: user.id).present?
   end
 
-# 検索方法分岐
+  # 検索方法分岐
   def self.looks(search, word)
-    if search == "perfect_match"#・完全一致→perfect_match
+    if search == "perfect_match" # ・完全一致→perfect_match
       @user = User.where("name LIKE?", "#{word}")
-    elsif search == "forward_match"#・前方一致→forward_match
-      @user = User.where("name LIKE?","#{word}%")
-    elsif search == "backward_match"#・後方一致→backword_match
-      @user = User.where("name LIKE?","%#{word}")
-    elsif search == "partial_match"#・部分一致→partial_match
-      @user = User.where("name LIKE?","%#{word}%")
+    elsif search == "forward_match" # ・前方一致→forward_match
+      @user = User.where("name LIKE?", "#{word}%")
+    elsif search == "backward_match" # ・後方一致→backword_match
+      @user = User.where("name LIKE?", "%#{word}")
+    elsif search == "partial_match" # ・部分一致→partial_match
+      @user = User.where("name LIKE?", "%#{word}%")
     else
       @user = User.all
     end

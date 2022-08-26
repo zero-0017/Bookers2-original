@@ -1,5 +1,5 @@
 class BooksController < ApplicationController
-before_action :ensure_correct_book, only: [:edit, :update]
+  before_action :ensure_correct_book, only: [:edit, :update]
 
   def show
     @book_detail = Book.find(params[:id])
@@ -13,22 +13,22 @@ before_action :ensure_correct_book, only: [:edit, :update]
   end
 
   def index
-    to  = Time.current.at_end_of_day#Time.current はconfig/application.rbに設定してあるタイムゾーンを元に現在日時を取得している　#at_end_of_day は1日の終わりを23:59に設定している
-    from  = (to - 6.day).at_beginning_of_day#at_beginning_of_day　は1日の始まりの時刻を0:00に設定している
-    @books = Book.includes(:favorited_users).#ユーザーの情報がfavorited_usersに格納されていて、includesの引数に入れてあげることで、事前にユーザーのデータを読み込ませてあげることができる
-      sort {|a,b|#sort {|b,a|なら、いいねの少ない順に投稿を表示
+    to = Time.current.at_end_of_day # Time.current はconfig/application.rbに設定してあるタイムゾーンを元に現在日時を取得している　#at_end_of_day は1日の終わりを23:59に設定している
+    from = (to - 6.day).at_beginning_of_day # at_beginning_of_day　は1日の始まりの時刻を0:00に設定している
+    @books = Book.includes(:favorited_users). # ユーザーの情報がfavorited_usersに格納されていて、includesの引数に入れてあげることで、事前にユーザーのデータを読み込ませてあげることができる
+      sort { |a, b| # sort {|b,a|なら、いいねの少ない順に投稿を表示
         b.favorited_users.includes(:favorites).where(created_at: from...to).size <=>
         a.favorited_users.includes(:favorites).where(created_at: from...to).size
       }
-  if params[:latest]
-     @books = Book.latest.page(params[:page])
-  elsif params[:old]
-     @books = Book.old.page(params[:page])
-  elsif params[:star_count]
-     @books = Book.star_count.page(params[:page])
-  else
-     @books = Book.all.page(params[:page])
-  end
+    if params[:latest]
+      @books = Book.latest.page(params[:page])
+    elsif params[:old]
+      @books = Book.old.page(params[:page])
+    elsif params[:star_count]
+      @books = Book.star_count.page(params[:page])
+    else
+      @books = Book.all.page(params[:page])
+    end
     @book = Book.new
     # @user = current_user
   end
@@ -64,20 +64,19 @@ before_action :ensure_correct_book, only: [:edit, :update]
   end
 
   def search_book
-     @book = Book.new
-     @books = Book.search(params[:keyword])
+    @book = Book.new
+    @books = Book.search(params[:keyword])
   end
 
   private
-
-  def book_params
-    params.require(:book).permit(:title, :body, :star, :category)
-  end
-
-  def ensure_correct_book
-    @book = Book.find(params[:id])
-    unless @book.user == current_user
-      redirect_to books_path
+    def book_params
+      params.require(:book).permit(:title, :body, :star, :category)
     end
-  end
+
+    def ensure_correct_book
+      @book = Book.find(params[:id])
+      unless @book.user == current_user
+        redirect_to books_path
+      end
+    end
 end

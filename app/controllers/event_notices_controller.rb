@@ -9,9 +9,9 @@ class EventNoticesController < ApplicationController
     @body = params[:body]
 
     event = {
-      :group => @group,
-      :title => @title,
-      :body => @body
+      group: @group,
+      title: @title,
+      body: @body
 
     }
 
